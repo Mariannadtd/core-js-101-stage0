@@ -223,8 +223,28 @@ function findFirstSingleChar(str) {
  *   5, 3, true, true   => '[3, 5]'
  *
  */
-function getIntervalString(/* a, b, isStartIncluded, isEndIncluded */) {
-  throw new Error('Not implemented');
+function getIntervalString(a, b, isStartIncluded, isEndIncluded) {
+  let res = '';
+
+  if (isStartIncluded === true) {
+    res += '[';
+  } else if (isStartIncluded === false) {
+    res += '(';
+  }
+
+  if (a > b) {
+    res += `${b}, ${a}`;
+  } else {
+    res += `${a}, ${b}`;
+  }
+
+  if (isEndIncluded === true) {
+    res += ']';
+  } else if (isEndIncluded === false) {
+    res += ')';
+  }
+
+  return res;
 }
 
 /**
@@ -239,8 +259,12 @@ function getIntervalString(/* a, b, isStartIncluded, isEndIncluded */) {
  * 'rotator' => 'rotator'
  * 'noon' => 'noon'
  */
-function reverseString(/* str */) {
-  throw new Error('Not implemented');
+function reverseString(str) {
+  const res = [];
+  for (let i = str.length - 1; i >= 0; i -= 1) {
+    res.push(str[i]);
+  }
+  return res.join('');
 }
 
 /**
@@ -255,8 +279,9 @@ function reverseString(/* str */) {
  *   87354 => 45378
  *   34143 => 34143
  */
-function reverseInteger(/* num */) {
-  throw new Error('Not implemented');
+function reverseInteger(num) {
+  const str = String(num);
+  return Number(str.split('').reverse().join(''));
 }
 
 /**
@@ -279,8 +304,24 @@ function reverseInteger(/* num */) {
  *   5436468789016589 => false
  *   4916123456789012 => false
  */
-function isCreditCardNumber(/* ccn */) {
-  throw new Error('Not implemented');
+function isCreditCardNumber(ccn) {
+  const reverseCcn = ccn.toString().split('').reverse();
+  let x = 0;
+
+  for (let i = 0; i < reverseCcn.length; i += 1) {
+    if (i % 2 === 1) {
+      const doubled = reverseCcn[i] * 2;
+      if (doubled > 9) {
+        x += doubled - 9;
+      } else {
+        x += doubled;
+      }
+    } else {
+      x += Number(reverseCcn[i]);
+    }
+  }
+
+  return x % 10 === 0;
 }
 
 /**
